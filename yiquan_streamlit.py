@@ -79,7 +79,7 @@ if 'workout' in st.session_state:
                 timer = '{:02d}:{:02d}'.format(mins, secs)
                 st.write(f"Time remaining: {timer}")
                 time.sleep(1)
-                st.experimental_rerun()
+                st.rerun()
             st.write(f"{stance} completed!")
             
             st.subheader('Your Workout:')
