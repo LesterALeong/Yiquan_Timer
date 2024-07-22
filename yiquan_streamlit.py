@@ -1,7 +1,6 @@
 import streamlit as st
 import random
 import time
-from datetime import timedelta
 
 # Define the stances
 front_stances = [
@@ -73,10 +72,10 @@ if st.button('Generate Workout'):
         st.subheader('Workout Timer:')
         for stance, time_for_stance in workout:
             st.write(f"Current stance: {stance}")
+            timer_placeholder = st.empty()
             for remaining_time in range(time_for_stance * 60, 0, -1):
                 mins, secs = divmod(remaining_time, 60)
                 timer = '{:02d}:{:02d}'.format(mins, secs)
-                st.write(f"Time remaining: {timer}")
+                timer_placeholder.write(f"Time remaining: {timer}")
                 time.sleep(1)
-                st.empty()
             st.write(f"{stance} completed!")
