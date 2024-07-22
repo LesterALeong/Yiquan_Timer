@@ -22,15 +22,9 @@ power_stances = [
 
 # Function to generate the workout
 def generate_workout(duration):
-    workout = []
-    
-    # Add warm-up
-    workout.append(("Warm-Up", 5))
-    
-    # Remaining time
+    workout = [("Warm-Up", 5)]
     remaining_time = duration - 5
     
-    # Generate workout
     while remaining_time > 0:
         stance_type = random.choice(['front', 'side', 'power'])
         
@@ -64,18 +58,33 @@ duration = st.slider('Select workout duration (minutes)', min_value=10, max_valu
 if st.button('Generate Workout'):
     workout = generate_workout(duration)
     
+    st.session_state['workout'] = workout
+    st.session_state['start_workout'] = False
+    
     st.subheader('Your Workout:')
     for stance, time_for_stance in workout:
         st.write(f"{stance}: {time_for_stance} minutes")
 
+if 'workout' in st.session_state:
     if st.button('Start Workout'):
-        st.subheader('Workout Timer:')
-        for stance, time_for_stance in workout:
-            st.write(f"Current stance: {stance}")
-            timer_placeholder = st.empty()
+        st.session_state['start_workout'] = True
+
+    if st.session_state['start_workout']:
+        workout = st.session_state['workout']
+        for i, (stance, time_for_stance) in enumerate(workout):
+            st.write(f"**Current stance:** {stance}")
+            st.write(f"Time remaining: {time_for_stance} minutes")
             for remaining_time in range(time_for_stance * 60, 0, -1):
                 mins, secs = divmod(remaining_time, 60)
                 timer = '{:02d}:{:02d}'.format(mins, secs)
-                timer_placeholder.write(f"Time remaining: {timer}")
+                st.write(f"Time remaining: {timer}")
                 time.sleep(1)
+                st.experimental_rerun()
             st.write(f"{stance} completed!")
+            
+            st.subheader('Your Workout:')
+            for j, (s, t) in enumerate(workout):
+                if i == j:
+                    st.write(f"**{s}: {t} minutes (Current)**")
+                else:
+                    st.write(f"{s}: {t} minutes")
