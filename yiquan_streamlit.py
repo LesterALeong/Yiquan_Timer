@@ -72,12 +72,15 @@ if 'workout' in st.session_state:
     if st.session_state['start_workout']:
         workout = st.session_state['workout']
         placeholder = st.empty()  # Placeholder for the current stance and timer
+        workout_placeholder = st.empty()  # Placeholder for the workout list
         for i, (stance, time_for_stance) in enumerate(workout):
+            workout_list = []
             for j, (s, t) in enumerate(workout):
                 if i == j:
-                    st.write(f"**{s}: {t} minutes (Current)**")
+                    workout_list.append(f"**{s}: {t} minutes (Current)**")
                 else:
-                    st.write(f"{s}: {t} minutes")
+                    workout_list.append(f"{s}: {t} minutes")
+            workout_placeholder.markdown("\n".join(workout_list))
                     
             with placeholder.container():
                 st.write(f"**Current stance:** {stance}")
