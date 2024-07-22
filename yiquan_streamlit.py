@@ -83,7 +83,3 @@ if st.button('Generate Workout'):
             st.write(f"Current stance: {stance} - {time_for_stance} minutes")
             time.sleep(time_for_stance * 60)
             st.write(f"{stance} completed!")
-
-# Run the app
-if __name__ == '__main__':
-    st.run()
