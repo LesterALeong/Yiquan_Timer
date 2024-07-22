@@ -74,13 +74,15 @@ if 'workout' in st.session_state:
         for i, (stance, time_for_stance) in enumerate(workout):
             st.write(f"**Current stance:** {stance}")
             st.write(f"Time remaining: {time_for_stance} minutes")
+
+            placeholder = st.empty()
             for remaining_time in range(time_for_stance * 60, 0, -1):
                 mins, secs = divmod(remaining_time, 60)
                 timer = '{:02d}:{:02d}'.format(mins, secs)
-                st.write(f"Time remaining: {timer}")
+                placeholder.write(f"Time remaining: {timer}")
                 time.sleep(1)
-                st.rerun()
-            st.write(f"{stance} completed!")
+            
+            placeholder.write(f"{stance} completed!")
             
             st.subheader('Your Workout:')
             for j, (s, t) in enumerate(workout):
